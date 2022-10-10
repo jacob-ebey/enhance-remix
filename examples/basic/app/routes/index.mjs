@@ -22,9 +22,6 @@ export default function Index({ html, state }) {
   let { greeting } = useLoaderData(Index, state);
 
   return html`
-    <head>
-      <title>Enhance Remix</title>
-    </head>
     <h2>Home!!!</h2>
     <hello-world ${greeting ? `greeting=${greeting}` : ""}></hello-world>
     <form>
