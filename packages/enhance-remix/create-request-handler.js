@@ -1,6 +1,8 @@
 import enhance from "@enhance/ssr";
 import { unstable_createStaticHandler as createStaticHandler } from "@remix-run/router";
 
+import { RemixForm } from "./elements.js";
+
 /**
  *
  * @param {import("@remix-run/router").AgnosticDataRouteObject[]} routes
@@ -33,6 +35,7 @@ export default function createRequestHandler(routes, elements) {
 
     let finalElements = {
       ...elements,
+      "remix-form": RemixForm,
     };
     for (let i = 0; i < context.matches.length; i++) {
       let match = context.matches[i];

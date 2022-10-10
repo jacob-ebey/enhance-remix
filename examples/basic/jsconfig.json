@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "typescript-lit-html-plugin"
+      }
+    ]
+  }
+}

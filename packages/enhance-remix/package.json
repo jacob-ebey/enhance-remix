@@ -9,5 +9,9 @@
   },
   "dependencies": {
     "@enhance/ssr": "3.0.9"
+  },
+  "devDependencies": {
+    "@enhance/types": "0.4.0",
+    "literally-html": "0.1.1"
   }
 }
