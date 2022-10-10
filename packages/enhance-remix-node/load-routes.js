@@ -158,8 +158,8 @@ function createRouteId(appDir, routeFile) {
 
 const routeFileExtensions = [".mjs", ".js"];
 function resolveRouteFile(basePath) {
-  for (const ext of routeFileExtensions) {
-    const file = basePath + ext;
+  for (let ext of routeFileExtensions) {
+    let file = basePath + ext;
     let stat = fs.existsSync(file) && fs.statSync(file);
     if (stat && stat.isFile()) {
       return file;

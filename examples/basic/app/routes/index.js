@@ -48,7 +48,7 @@ export default function Index({ html, state }) {
           this.greeting = this.querySelector("input[name='greeting']");
           this.helloWorld = this.querySelector("hello-world");
 
-          const commitGreeting = () => {
+          let commitGreeting = () => {
             let greeting = this.greeting.value.trim();
             this.helloWorld.setAttribute("greeting", greeting);
             let url = new URL(window.location.href);
