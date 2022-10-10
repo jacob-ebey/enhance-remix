@@ -2,7 +2,7 @@ import { json } from "enhance-remix";
 
 /**
  *
- * @param {LoaderFunctionArgs} args
+ * @param {import("enhance-remix").LoaderFunctionArgs} args
  */
 export function loader({ request }) {
   let url = new URL(request.url);
