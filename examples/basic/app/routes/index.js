@@ -38,7 +38,7 @@ export default function Index({ html, state }) {
 	return html`
 		<h2>Home!!!</h2>
 		<hello-world ${greeting ? `greeting=${greeting}` : ""}></hello-world>
-		<remix-form>
+		<remix-form replace>
 			<input type="text" name="greeting" value=${greeting} />
 		</remix-form>
 	`;

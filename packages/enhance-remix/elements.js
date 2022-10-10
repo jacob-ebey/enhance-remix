@@ -21,6 +21,9 @@ export function RemixForm({ html, state }) {
 					this.form = this.querySelector("form");
 
 					this.form.addEventListener("submit", (event) => {
+						let replace = typeof this.getAttribute("replace") == "string";
+						if (!replace) return;
+
 						let target = event.submitter || event.currentTarget;
 
 						let action, method, enctype, formData;
@@ -116,9 +119,11 @@ export function RemixForm({ html, state }) {
 
 						if (window._navigations) {
 							window._navigations.forEach((c) => c.abort());
+							window._navigations = [];
 						}
 
 						let controller = new AbortController();
+						let signal = controller.signal;
 						window._navigations.push(controller);
 
 						console.log({ action: url.href, method });
@@ -127,9 +132,11 @@ export function RemixForm({ html, state }) {
 							method,
 							headers,
 							body,
-							signal: controller.signal,
+							signal,
 						})
 							.then(async (response) => {
+								if (signal.aborted) return;
+
 								history.replaceState({}, "", url.href);
 								document.documentElement.innerHTML = await response.text();
 								executeScriptElements(document.getElementsByTagName("body")[0]);
