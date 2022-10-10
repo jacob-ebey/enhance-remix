@@ -3,12 +3,5 @@
   "workspaces": [
     "examples/*",
     "packages/*"
-  ],
-  "scripts": {
-    "build": "turbo run build",
-    "test": "turbo run test --continue"
-  },
-  "devDependencies": {
-    "turbo": "1.5.5"
-  }
+  ]
 }
