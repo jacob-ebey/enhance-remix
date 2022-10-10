@@ -13,7 +13,7 @@ export default function HelloWorld({ html, state }) {
     <p>${greeting}</p>
 
     <style>
-      hello-world {
+      ${elementName} {
         color: red;
       }
     </style>

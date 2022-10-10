@@ -137,7 +137,6 @@ function createRoutePathInfo(routesDir, routeFile) {
     if (segment.startsWith("_")) continue;
     if (segment.endsWith("_")) segment = segment.slice(0, -1);
     segment = segment.replace(/^\$/, ":");
-    segment = segment.replace(/^\$$/, "*");
     pathSegments.push(segment);
   }
   let index = undefined;
@@ -146,6 +145,7 @@ function createRoutePathInfo(routesDir, routeFile) {
     index = true;
   }
 
+  console.log(pathSegments.join("/"));
   return { path: pathSegments.join("/") || undefined, index };
 }
 
