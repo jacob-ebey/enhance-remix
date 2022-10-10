@@ -1,7 +1,10 @@
 {
-  "private": true,
-  "workspaces": [
-    "examples/*",
-    "packages/*"
-  ]
+	"private": true,
+	"workspaces": [
+		"examples/*",
+		"packages/*"
+	],
+	"engines": {
+		"node": ">=18"
+	}
 }
