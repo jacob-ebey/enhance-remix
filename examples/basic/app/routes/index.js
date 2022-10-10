@@ -1,7 +1,12 @@
-import { json, useElementName, useLoaderData } from "enhance-remix";
+import {
+	json,
+	useActionData,
+	useElementName,
+	useLoaderData,
+} from "enhance-remix";
 
 /**
- * @param {import("enhance-remix/enhance-remix").LoaderFunctionArgs} args
+ * @param {import("enhance-remix").LoaderFunctionArgs} args
  */
 export function loader({ request }) {
 	let url = new URL(request.url);
@@ -13,12 +18,20 @@ export function loader({ request }) {
 	return json({ greeting });
 }
 
-export function action({}) {
-	return null;
+/**
+ * @param {import("enhance-remix").ActionFunctionArgs} args
+ */
+export async function action({ request }) {
+	let formData = await request.formData();
+	let greeting = formData.get("greeting");
+
+	return {
+		greeting: typeof greeting == "string" && greeting ? greeting : undefined,
+	};
 }
 
 /**
- * @arg {import("enhance-remix/enhance-remix").MetaFunctionArgs<typeof loader>} args
+ * @arg {import("enhance-remix").MetaFunctionArgs<typeof loader>} args
  */
 export function meta({ data }) {
 	return {
@@ -34,8 +47,13 @@ export function meta({ data }) {
 export default function Index({ html, state }) {
 	let elementName = useElementName(Index);
 
-	/** @type {import("enhance-remix/enhance-remix").SerializeFrom<typeof loader>} */
+	/** @type {import("enhance-remix").SerializeFrom<typeof loader>} */
 	let { greeting } = useLoaderData(Index, state);
+
+	/** @type {import("enhance-remix").SerializeFrom<typeof action>} */
+	let { greeting: actionGreeting } = useActionData(Index, state) || {};
+
+	greeting = actionGreeting || greeting;
 
 	return html`
 		<header></header>
@@ -45,7 +63,7 @@ export default function Index({ html, state }) {
 				<hello-world
 					${greeting ? `greeting=${JSON.stringify(greeting)}` : ""}
 				></hello-world>
-				<remix-form replace>
+				<remix-form method="post" action="/?index" replace>
 					<input
 						type="text"
 						name="greeting"

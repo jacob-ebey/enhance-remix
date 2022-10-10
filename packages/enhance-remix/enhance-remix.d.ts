@@ -275,6 +275,11 @@ export function json<Data extends unknown>(
 	init?: number | ResponseInit
 ): TypedResponse<Data>;
 
+export function useActionData<Data = unknown>(
+	fn: EnhanceElemFn,
+	state: { store: Record<any, any> }
+): SerializeFrom<Data>;
+
 export function useElementName(fn: EnhanceElemFn): string;
 
 export function useLoaderData<Data = unknown>(

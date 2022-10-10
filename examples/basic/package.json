@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@enhance/types": "0.4.0",
+    "@types/node": "18.8.4",
     "literally-html": "0.1.1",
     "nodemon": "2.0.20"
   }

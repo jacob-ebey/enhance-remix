@@ -1,3 +1,4 @@
+/** @type {import("enhance-remix").LinksFunction} */
 export function links() {
 	return [
 		{
