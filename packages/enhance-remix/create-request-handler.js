@@ -56,7 +56,7 @@ export default function createRequestHandler(routes, elements) {
 					if (!link) continue;
 
 					links += `<link ${Object.entries(link)
-						.map(([key, value]) => `${key}=${value}`)
+						.map(([key, value]) => `${key}=${JSON.stringify(String(value))}`)
 						.join(" ")}>`;
 				}
 			}
@@ -88,7 +88,9 @@ export default function createRequestHandler(routes, elements) {
 				if (!value) continue;
 
 				if (["charset", "charSet"].includes(name)) {
-					head += `<meta key="charset" charSet={value as string}>`;
+					head += `<meta key="charset" charSet=${JSON.stringify(
+						String(value)
+					)}>`;
 					continue;
 				}
 
@@ -106,19 +108,21 @@ export default function createRequestHandler(routes, elements) {
 
 				for (let content of [value].flat()) {
 					if (isOpenGraphTag) {
-						head += `<meta key="${name}" property="${name}" content="${String(
-							content
-						)}">`;
+						head += `<meta property="${name}" content=${JSON.stringify(
+							String(content)
+						)}>`;
 						continue;
 					}
 
 					if (typeof content == "string") {
-						head += `<meta name="${name}" content="${content}">`;
+						head += `<meta name="${name}" content=${JSON.stringify(
+							String(content)
+						)}">`;
 						continue;
 					}
 
 					head += `<meta ${Object.entries(content)
-						.map(([name, value]) => `${name}="${value}"`)
+						.map(([name, value]) => `${name}=${JSON.stringify(String(value))}`)
 						.join(" ")}>`;
 				}
 			}

@@ -7,7 +7,9 @@ export function RemixForm({ html, state }) {
 	return html`
 		<form
 			${Object.entries(attrs)
-				.map(([name, value]) => (value ? `${name}=${value}` : ""))
+				.map(([name, value]) =>
+					value ? `${name}=${JSON.stringify(String(value))}` : ""
+				)
 				.join(" ")}
 		>
 			<slot></slot>
