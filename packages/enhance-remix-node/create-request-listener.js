@@ -17,11 +17,19 @@ export default function createRequestListener(handler) {
 				body,
 			});
 			let response = await handler(request);
-			res.writeHead(
-				response.status,
-				response.statusText,
-				response.headers.entries()
-			);
+			let headers = {};
+			for (let [key, value] of response.headers) {
+				if (!(key in headers)) {
+					headers[key] = value;
+				} else {
+					if (Array.isArray(headers[key])) {
+						headers[key].push(value);
+					} else {
+						headers[key] = [headers[key], value];
+					}
+				}
+			}
+			res.writeHead(response.status, response.statusText, headers);
 
 			if (response.body) {
 				let reader = response.body.getReader();

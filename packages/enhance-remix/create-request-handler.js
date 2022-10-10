@@ -37,10 +37,29 @@ export default function createRequestHandler(routes, elements) {
 			...elements,
 			"remix-form": RemixForm,
 		};
+
+		let links = "";
+
 		for (let i = 0; i < context.matches.length; i++) {
 			let match = context.matches[i];
 			finalElements[`route-${createElementName(match.route.id)}`] =
 				match.route.element;
+
+			if (match.route.links) {
+				/** @type {import("./enhance-remix").LinkDescriptor} */
+				let routeLinks =
+					typeof match.route.links == "function"
+						? match.route.links()
+						: match.route.links;
+
+				for (let link of routeLinks) {
+					if (!link) continue;
+
+					links += `<link ${Object.entries(link)
+						.map(([key, value]) => `${key}=${value}`)
+						.join(" ")}>`;
+				}
+			}
 		}
 
 		let html = enhance({
@@ -69,7 +88,7 @@ export default function createRequestHandler(routes, elements) {
 				if (!value) continue;
 
 				if (["charset", "charSet"].includes(name)) {
-					head += `<meta key="charset" charSet={value as string} />`;
+					head += `<meta key="charset" charSet={value as string}>`;
 					continue;
 				}
 
@@ -89,18 +108,18 @@ export default function createRequestHandler(routes, elements) {
 					if (isOpenGraphTag) {
 						head += `<meta key="${name}" property="${name}" content="${String(
 							content
-						)}" />`;
+						)}">`;
 						continue;
 					}
 
 					if (typeof content == "string") {
-						head += `<meta name="${name}" content="${content}" />`;
+						head += `<meta name="${name}" content="${content}">`;
 						continue;
 					}
 
 					head += `<meta ${Object.entries(content)
 						.map(([name, value]) => `${name}="${value}"`)
-						.join(" ")} />`;
+						.join(" ")}>`;
 				}
 			}
 		}
@@ -136,13 +155,15 @@ export default function createRequestHandler(routes, elements) {
 		let body = html([
 			`<!DOCTYPE html><html ${
 				lang ? `lang=${lang}` : ""
-			}><head>${head}</head>` +
+			}><head>${links}${head}</head><body>` +
 				context.matches.reduceRight((acc, match, index) => {
-					return `<route-${createElementName(
-						match.route.id
-					)}>${acc}</route-${index}>`;
+					return match.route.element
+						? `<route-${createElementName(
+								match.route.id
+						  )}>${acc}</route-${index}>`
+						: acc;
 				}, "") +
-				"</html>",
+				"</body></html>",
 		]);
 
 		// TODO: Render using enhance-ssr

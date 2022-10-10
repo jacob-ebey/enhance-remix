@@ -38,12 +38,23 @@ export default function Index({ html, state }) {
 	let { greeting } = useLoaderData(Index, state);
 
 	return html`
-		<h2>Home!!!</h2>
-		<hello-world ${greeting ? `greeting=${greeting}` : ""}></hello-world>
-		<remix-form replace>
-			<input type="text" name="greeting" value=${greeting} />
-		</remix-form>
-		<span hidden>Loading...</span>
+		<header></header>
+		<main>
+			<article>
+				<h2>Home!!!</h2>
+				<hello-world ${greeting ? `greeting=${greeting}` : ""}></hello-world>
+				<remix-form replace>
+					<input type="text" name="greeting" value=${greeting} />
+				</remix-form>
+				<span hidden>Loading...</span>
+			</article>
+		</main>
+
+		<style scope="global">
+			${elementName} > header {
+				margin-bottom: 3.5em;
+			}
+		</style>
 
 		<script type="module">
 			class IndexRouteElement extends HTMLElement {
