@@ -5,7 +5,7 @@ import { unstable_createStaticHandler as createStaticHandler } from "@remix-run/
  *
  * @param {import("@remix-run/router").AgnosticDataRouteObject[]} routes
  * @param {unknown} elements
- * @returns {import("enhance-remix").RequestHandler}
+ * @returns {import("./enhance-remix").RequestHandler}
  */
 export default function createRequestHandler(routes, elements) {
   function recurseRoutesAndAssignId(route) {
@@ -47,7 +47,7 @@ export default function createRequestHandler(routes, elements) {
 
     let leafMatch = context.matches.slice(-1)[0];
     let { [leafMatch.route.id]: _, ...parentData } = context.loaderData;
-    /** @type {import("enhance-remix").MetaFunction} */
+    /** @type {import("./enhance-remix").MetaFunction} */
     let metaExport = leafMatch.route.meta;
     let metaObject =
       typeof metaExport == "function"

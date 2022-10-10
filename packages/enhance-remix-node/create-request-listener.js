@@ -1,7 +1,5 @@
-import * as stream from "node:stream";
-
 /**
- * @param {import("enhance-remix").RequestHandler} handler
+ * @param {import("enhance-remix/enhance-remix").RequestHandler} handler
  * @returns {import("http").RequestListener}
  */
 export default function createRequestListener(handler) {

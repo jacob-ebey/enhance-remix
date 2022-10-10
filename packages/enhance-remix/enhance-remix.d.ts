@@ -1,10 +1,23 @@
 import { type EnhanceElemFn } from "@enhance/types";
-import { type AgnosticDataRouteObject } from "@remix-run/router";
+import {
+  type AgnosticDataRouteObject,
+  type LoaderFunctionArgs,
+  type Params,
+} from "@remix-run/router";
 
 export {
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
 } from "@remix-run/router";
+
+export type LoaderFunction = (
+  args: LoaderFunctionArgs
+) => Promise<TypedResponse>;
+
+type AppData = any;
+export interface RouteData {
+  [routeId: string]: AppData;
+}
 
 export type MetaFunctionArgs<
   Loader extends LoaderFunction | unknown = unknown,

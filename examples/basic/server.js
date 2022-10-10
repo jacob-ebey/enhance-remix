@@ -1,6 +1,6 @@
 import * as http from "node:http";
 
-import { createRequestHandler } from "enhance-remix";
+import { createRequestHandler } from "enhance-remix/enhance-remix";
 import {
   loadElements,
   loadRoutes,

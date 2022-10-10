@@ -1,9 +1,9 @@
 {
+  "type": "module",
   "name": "enhance-remix-basic-example",
   "description": "A basic example of how to use enhance-remix",
   "scripts": {
-    "dev": "nodemon --watch server.mjs --watch app --watch ../../packages server.mjs",
-    "start": "node server.mjs"
+    "dev": "nodemon --watch server.mjs --watch app --watch ../../packages server.js"
   },
   "devDependencies": {
     "@enhance/types": "0.4.0",

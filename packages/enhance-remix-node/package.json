@@ -1,8 +1,9 @@
 {
+  "type": "module",
   "name": "enhance-remix-node",
   "version": "0.0.1",
   "description": "Node utils for enhance-remix",
-  "main": "enhance-remix-node.mjs",
+  "main": "enhance-remix-node.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

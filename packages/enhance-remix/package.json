@@ -1,8 +1,10 @@
 {
+  "type": "module",
   "name": "enhance-remix",
   "version": "0.0.1",
   "description": "Enhance + Remix",
-  "main": "index.mjs",
+  "main": "enhance-remix.js",
+  "types": "enhance-remix.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

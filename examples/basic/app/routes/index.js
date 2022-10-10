@@ -1,7 +1,7 @@
-import { json, useLoaderData, useElementName } from "enhance-remix";
+import { json, useLoaderData, useElementName } from "enhance-remix/enhance-remix";
 
 /**
- * @param {import("enhance-remix").LoaderFunctionArgs} args
+ * @param {import("enhance-remix/enhance-remix").LoaderFunctionArgs} args
  */
 export function loader({ request }) {
   let url = new URL(request.url);
@@ -14,7 +14,7 @@ export function loader({ request }) {
 }
 
 /**
- * @arg {import("enhance-remix").MetaFunctionArgs<typeof loader>} args
+ * @arg {import("enhance-remix/enhance-remix").MetaFunctionArgs<typeof loader>} args
  */
 export function meta({ data }) {
   return {
@@ -30,7 +30,7 @@ export function meta({ data }) {
 export default function Index({ html, state }) {
   let elementName = useElementName(Index);
 
-  /** @type {import("enhance-remix").SerializeFrom<typeof loader>} */
+  /** @type {import("enhance-remix/enhance-remix").SerializeFrom<typeof loader>} */
   let { greeting } = useLoaderData(Index, state);
 
   return html`
