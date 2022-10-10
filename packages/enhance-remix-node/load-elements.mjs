@@ -24,7 +24,9 @@ export default async function loadElements(
       }
 
       let elementModule = await import(elementFile);
-      elements[createElementName(elementFile)] = elementModule.default;
+      let elementName = createElementName(elementFile);
+      elementModule.default._elementName = elementName;
+      elements[elementName] = elementModule.default;
     }
   }
 

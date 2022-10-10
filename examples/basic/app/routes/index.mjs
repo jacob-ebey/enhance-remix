@@ -1,4 +1,4 @@
-import { json, useLoaderData, useRouteElementName } from "enhance-remix";
+import { json, useLoaderData, useElementName } from "enhance-remix";
 
 /**
  * @param {import("enhance-remix").LoaderFunctionArgs} args
@@ -28,6 +28,8 @@ export function meta({ data }) {
  * @type {import("@enhance/types").EnhanceElemFn}
  */
 export default function Index({ html, state }) {
+  let elementName = useElementName(Index);
+
   /** @type {import("enhance-remix").SerializeFrom<typeof loader>} */
   let { greeting } = useLoaderData(Index, state);
 
@@ -45,7 +47,6 @@ export default function Index({ html, state }) {
           this.form = this.querySelector("form");
           this.greeting = this.querySelector("input[name='greeting']");
           this.helloWorld = this.querySelector("hello-world");
-          console.log("HERE!");
 
           const commitGreeting = () => {
             let greeting = this.greeting.value.trim();
@@ -56,7 +57,6 @@ export default function Index({ html, state }) {
             } else {
               url.searchParams.delete("greeting");
             }
-
             history.replaceState({}, "", url.href);
           };
 
@@ -72,7 +72,7 @@ export default function Index({ html, state }) {
         }
       }
 
-      customElements.define(${useRouteElementName(Index)}, IndexRouteElement);
+      customElements.define(${JSON.stringify(elementName)}, IndexRouteElement);
     </script>
   `;
 }

@@ -10,7 +10,7 @@ import { unstable_createStaticHandler as createStaticHandler } from "@remix-run/
 export default function createRequestHandler(routes, elements) {
   function recurseRoutesAndAssignId(route) {
     if (route.element) {
-      route.element._elementName = createElementName(route.id);
+      route.element._elementName = "route-" + createElementName(route.id);
     }
     if (route.children) {
       route.children.forEach(recurseRoutesAndAssignId);

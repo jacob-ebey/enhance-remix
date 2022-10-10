@@ -1,10 +1,14 @@
+import { useElementName } from "enhance-remix";
+
 const defaultGreeting = "Hello World!";
 /**
  * @type {import('@enhance/types').EnhanceElemFn}
  */
 export default function HelloWorld({ html, state }) {
-  const { attrs } = state;
-  const { greeting = defaultGreeting } = attrs;
+  let elementName = useElementName(HelloWorld);
+
+  let { attrs } = state;
+  let { greeting = defaultGreeting } = attrs;
   return html`
     <p>${greeting}</p>
 
@@ -36,7 +40,7 @@ export default function HelloWorld({ html, state }) {
         }
       }
 
-      customElements.define("hello-world", HelloWorldElement);
+      customElements.define(${JSON.stringify(elementName)}, HelloWorldElement);
     </script>
   `;
 }

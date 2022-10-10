@@ -50,12 +50,12 @@ export function json<Data extends unknown>(
   init?: number | ResponseInit
 ): TypedResponse<Data>;
 
+export function useElementName(fn: EnhanceElemFn): string;
+
 export function useLoaderData<Data = unknown>(
   fn: EnhanceElemFn,
   state: { store: Record<any, any> }
 ): SerializeFrom<Data>;
-
-export function useRouteElementName(fn: EnhanceElemFn): string;
 
 // must be a type since this is a subtype of response
 // interfaces must conform to the types they extend
