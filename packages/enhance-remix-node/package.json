@@ -1,0 +1,16 @@
+{
+  "name": "enhance-remix-node",
+  "version": "0.0.1",
+  "description": "Node utils for enhance-remix",
+  "main": "enhance-remix-node.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@remix-run/router": "1.0.2",
+    "enhance-remix": "0.0.1"
+  },
+  "devDependencies": {
+    "@enhance/types": "0.4.0"
+  }
+}

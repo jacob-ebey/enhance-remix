@@ -1,0 +1,12 @@
+{
+  "name": "enhance-remix-basic-example",
+  "description": "A basic example of how to use enhance-remix",
+  "scripts": {
+    "dev": "nodemon --watch server.mjs --watch app --watch ../../packages server.mjs",
+    "start": "node server.mjs"
+  },
+  "devDependencies": {
+    "@enhance/types": "0.4.0",
+    "nodemon": "2.0.20"
+  }
+}
