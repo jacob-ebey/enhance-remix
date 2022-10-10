@@ -9,7 +9,7 @@ export default function createRequestListener(handler) {
 	 */
 	return async (req, res) => {
 		try {
-			let url = new URL(req.url, "http://localhost");
+			let url = new URL(req.url, "http://" + req.headers.host || "localhost");
 			let body = req.method != "GET" && req.method != "HEAD" ? req : undefined;
 			let request = new Request(url, {
 				method: req.method,
