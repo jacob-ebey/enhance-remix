@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import { DefaultRoot } from "enhance-remix/enhance-remix";
+import { DefaultRoot } from "enhance-remix";
 import { invariant } from "@remix-run/router";
 
 /**

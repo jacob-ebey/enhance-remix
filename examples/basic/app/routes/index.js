@@ -1,4 +1,4 @@
-import { json, useLoaderData, useElementName } from "enhance-remix/enhance-remix";
+import { json, useLoaderData, useElementName } from "enhance-remix";
 
 /**
  * @param {import("enhance-remix/enhance-remix").LoaderFunctionArgs} args

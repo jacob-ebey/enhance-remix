@@ -4,7 +4,6 @@
   "version": "0.0.1",
   "description": "Enhance + Remix",
   "main": "enhance-remix.js",
-  "types": "enhance-remix.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
