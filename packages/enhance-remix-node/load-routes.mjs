@@ -45,7 +45,12 @@ export default async function loadRoutes(
     for (let file of routeFiles) {
       let routeFile = path.resolve(routesDir, file);
       let stat = fs.statSync(routeFile);
-      if (!stat.isFile()) continue;
+      if (
+        !stat.isFile() &&
+        !routeFileExtensions.some((ext) => routeFile.endsWith(ext))
+      ) {
+        continue;
+      }
 
       let routeModule = await import(routeFile);
       routes.push({

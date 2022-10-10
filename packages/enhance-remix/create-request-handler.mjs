@@ -4,9 +4,10 @@ import { unstable_createStaticHandler as createStaticHandler } from "@remix-run/
 /**
  *
  * @param {import("@remix-run/router").AgnosticDataRouteObject[]} routes
+ * @param {unknown} elements
  * @returns {import("enhance-remix").RequestHandler}
  */
-export default function createRequestHandler(routes) {
+export default function createRequestHandler(routes, elements) {
   return async (request) => {
     let staticHandler = createStaticHandler(routes);
     let context = await staticHandler.query(request);
@@ -19,19 +20,25 @@ export default function createRequestHandler(routes) {
       return new Response("Not Found", { status: 404 });
     }
 
-    let elements = {};
+    let finalElements = {
+      ...elements,
+    };
     for (let i = 0; i < context.matches.length; i++) {
       let match = context.matches[i];
-      elements[`route-${i}`] = match.route.element;
+      finalElements[`route-${createElementName(match.route.id)}`] =
+        match.route.element;
     }
 
     let html = enhance({
-      elements,
+      elements: finalElements,
+      initialState: context,
     });
 
     let body = html([
       context.matches.reduceRight((acc, match, index) => {
-        return `<route-${index}>${acc}</route-${index}>`;
+        return `<route-${createElementName(
+          match.route.id
+        )}>${acc}</route-${index}>`;
       }, ""),
     ]);
 
@@ -43,4 +50,8 @@ export default function createRequestHandler(routes) {
       },
     });
   };
+}
+
+function createElementName(id) {
+  return id.replace(/[^a-z0-9\$]/gi, "-");
 }
