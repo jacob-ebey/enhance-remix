@@ -14,7 +14,13 @@ export function RemixForm({ html, state }) {
 		</form>
 
 		<script type="module">
-			window._navigations = window._navigations || [];
+			function emitChange() {
+				setTimeout(() => {
+					let navigation = window._getNavigation();
+					window._navigationCallbacks.forEach((cb) => cb(navigation));
+				}, 1);
+			}
+
 			class RemixFormElement extends HTMLElement {
 				constructor() {
 					super();
@@ -117,16 +123,14 @@ export function RemixForm({ html, state }) {
 							}
 						}
 
-						if (window._navigations) {
-							window._navigations.forEach((c) => c.abort());
-							window._navigations = [];
-						}
+						window._transitions.forEach((c) => c.abort());
+						window._transitions = [];
 
 						let controller = new AbortController();
 						let signal = controller.signal;
-						window._navigations.push(controller);
-
-						console.log({ action: url.href, method });
+						let transition = { method, url, formData, controller };
+						window._transitions.push(transition);
+						emitChange();
 
 						fetch(url.href, {
 							method,
@@ -143,6 +147,11 @@ export function RemixForm({ html, state }) {
 							})
 							.catch((reason) => {
 								console.error(reason);
+							})
+							.then(() => {
+								if (signal.aborted) return;
+								window._transitions = [];
+								emitChange();
 							});
 
 						event.preventDefault();

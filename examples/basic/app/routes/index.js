@@ -1,4 +1,4 @@
-import { json, useLoaderData } from "enhance-remix";
+import { json, useElementName, useLoaderData } from "enhance-remix";
 
 /**
  * @param {import("enhance-remix/enhance-remix").LoaderFunctionArgs} args
@@ -32,6 +32,8 @@ export function meta({ data }) {
  * @type {import("@enhance/types").EnhanceElemFn}
  */
 export default function Index({ html, state }) {
+	let elementName = useElementName(Index);
+
 	/** @type {import("enhance-remix/enhance-remix").SerializeFrom<typeof loader>} */
 	let { greeting } = useLoaderData(Index, state);
 
@@ -41,5 +43,43 @@ export default function Index({ html, state }) {
 		<remix-form replace>
 			<input type="text" name="greeting" value=${greeting} />
 		</remix-form>
+		<span hidden>Loading...</span>
+
+		<script type="module">
+			class IndexRouteElement extends HTMLElement {
+				constructor() {
+					super();
+					this.loading = this.querySelector("span");
+				}
+
+				connectedCallback() {
+					if (this.unsubscribe) {
+						this.unsubscribe();
+					}
+
+					this.unsubscribe = window.useNavigation((navigation) => {
+						if (navigation.state == "loading") {
+							this.loading.hidden = false;
+						} else {
+							this.loading.hidden = true;
+						}
+					});
+				}
+
+				disconnectedCallback() {
+					if (this.unsubscribe) {
+						this.unsubscribe();
+						this.unsubscribe = undefined;
+					}
+				}
+			}
+
+			if (!customElements.get(${JSON.stringify(elementName)})) {
+				customElements.define(
+					${JSON.stringify(elementName)},
+					IndexRouteElement
+				);
+			}
+		</script>
 	`;
 }
