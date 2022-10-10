@@ -53,8 +53,13 @@ export default async function loadRoutes(
       }
 
       let routeModule = await import(routeFile);
+      let routeId = createRouteId(appDir, routeFile);
+      if (routeModule.default) {
+        routeModule.default._routeId = routeId;
+      }
+
       routes.push({
-        id: createRouteId(appDir, routeFile),
+        id: routeId,
         action: rootRouteModule.action,
         handle: rootRouteModule.handle,
         hasErrorBoundary: !!rootRouteModule.ErrorBoundary,
@@ -68,8 +73,12 @@ export default async function loadRoutes(
 
   // 3. Combine and sort the routes by id
 
+  let rootRouteId = createRouteId(appDir, rootRouteFile);
+  if (rootRouteModule.default) {
+    rootRouteModule.default._routeId = rootRouteId;
+  }
   let rootRoute = {
-    id: createRouteId(appDir, rootRouteFile),
+    id: rootRouteId,
     action: rootRouteModule.action,
     handle: rootRouteModule.handle,
     hasErrorBoundary: !!rootRouteModule.ErrorBoundary,
@@ -82,7 +91,6 @@ export default async function loadRoutes(
   for (let route of routes) {
     let parentRoute = findParentRoute(routes, route);
     if (parentRoute) {
-      console.log({ path: route.path, parentPath: parentRoute.path });
       parentRoute.children = parentRoute.children || [];
       route.path = route.path
         ? route.path.slice(parentRoute.path.length + 1)
@@ -103,7 +111,6 @@ function byLongestFirst(a, b) {
 }
 
 function findParentRoute(routes, route) {
-  console.log(routes);
   let parentRoute = routes.find((r) => route.id.startsWith(r.id + "."));
   return parentRoute;
 }

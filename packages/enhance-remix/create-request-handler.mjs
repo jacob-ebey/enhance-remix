@@ -8,6 +8,17 @@ import { unstable_createStaticHandler as createStaticHandler } from "@remix-run/
  * @returns {import("enhance-remix").RequestHandler}
  */
 export default function createRequestHandler(routes, elements) {
+  function recurseRoutesAndAssignId(route) {
+    if (route.element) {
+      route.element._elementName = createElementName(route.id);
+    }
+    if (route.children) {
+      route.children.forEach(recurseRoutesAndAssignId);
+    }
+  }
+  for (let route of routes) {
+    recurseRoutesAndAssignId(route);
+  }
   return async (request) => {
     let staticHandler = createStaticHandler(routes);
     let context = await staticHandler.query(request);

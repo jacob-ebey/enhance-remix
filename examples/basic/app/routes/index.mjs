@@ -1,4 +1,4 @@
-import { json } from "enhance-remix";
+import { json, useLoaderData, useRouteElementName } from "enhance-remix";
 
 /**
  *
@@ -15,10 +15,11 @@ export function loader({ request }) {
 }
 
 /**
- * @type {import('@enhance/types').EnhanceElemFn}
+ * @type {import("@enhance/types").EnhanceElemFn}
  */
 export default function Index({ html, state }) {
-  let { greeting } = state.store.loaderData["routes/index"];
+  /** @type {import("enhance-remix").SerializeFrom<typeof loader>} */
+  let { greeting } = useLoaderData(Index, state);
 
   return html`
     <head>
@@ -37,6 +38,7 @@ export default function Index({ html, state }) {
           this.form = this.querySelector("form");
           this.greeting = this.querySelector("input[name='greeting']");
           this.helloWorld = this.querySelector("hello-world");
+          console.log("HERE!");
 
           const commitGreeting = () => {
             let greeting = this.greeting.value.trim();
@@ -63,7 +65,7 @@ export default function Index({ html, state }) {
         }
       }
 
-      customElements.define("route-routes-index", IndexRouteElement);
+      customElements.define(${useRouteElementName(Index)}, IndexRouteElement);
     </script>
   `;
 }
