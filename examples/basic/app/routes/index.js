@@ -42,9 +42,15 @@ export default function Index({ html, state }) {
 		<main>
 			<article>
 				<h2>Home!!!</h2>
-				<hello-world ${greeting ? `greeting=${greeting}` : ""}></hello-world>
+				<hello-world
+					${greeting ? `greeting=${JSON.stringify(greeting)}` : ""}
+				></hello-world>
 				<remix-form replace>
-					<input type="text" name="greeting" value=${greeting} />
+					<input
+						type="text"
+						name="greeting"
+						value=${JSON.stringify(greeting)}
+					/>
 				</remix-form>
 				<span hidden>Loading...</span>
 			</article>
