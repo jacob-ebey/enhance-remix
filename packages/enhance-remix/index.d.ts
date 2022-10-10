@@ -6,6 +6,38 @@ export {
   type LoaderFunctionArgs,
 } from "@remix-run/router";
 
+export type MetaFunctionArgs<
+  Loader extends LoaderFunction | unknown = unknown,
+  ParentsLoaders extends Record<string, LoaderFunction> = {}
+> = {
+  data: Loader extends LoaderFunction ? SerializeFrom<Loader> : AppData;
+  parentsData: {
+    [k in keyof ParentsLoaders]: SerializeFrom<ParentsLoaders[k]>;
+  } & RouteData;
+  params: Params;
+  location: Location;
+};
+
+export interface MetaFunction<
+  Loader extends LoaderFunction | unknown = unknown,
+  ParentsLoaders extends Record<string, LoaderFunction> = {}
+> {
+  (args: MetaFunctionArgs<Loader, ParentsLoaders>): HtmlMetaDescriptor;
+}
+
+export interface HtmlMetaDescriptor {
+  charset?: "utf-8";
+  charSet?: "utf-8";
+  title?: string;
+  lang?: string;
+  [name: string]:
+    | null
+    | string
+    | undefined
+    | Record<string, string>
+    | Array<Record<string, string> | string>;
+}
+
 export type RequestHandler = (request: Request) => Promise<Response>;
 
 export function createRequestHandler(

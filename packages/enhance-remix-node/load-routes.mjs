@@ -60,10 +60,12 @@ export default async function loadRoutes(
 
       routes.push({
         id: routeId,
-        action: rootRouteModule.action,
-        handle: rootRouteModule.handle,
-        hasErrorBoundary: !!rootRouteModule.ErrorBoundary,
+        action: routeModule.action,
+        handle: routeModule.handle,
+        hasErrorBoundary: !!routeModule.ErrorBoundary,
         loader: routeModule.loader,
+        links: routeModule.links,
+        meta: routeModule.meta,
         element: routeModule.default,
         ...createRoutePathInfo(routesDir, routeFile),
       });
@@ -83,8 +85,9 @@ export default async function loadRoutes(
     handle: rootRouteModule.handle,
     hasErrorBoundary: !!rootRouteModule.ErrorBoundary,
     loader: rootRouteModule.loader,
+    links: rootRouteModule.links,
+    meta: rootRouteModule.meta,
     element: rootRouteModule.default,
-    children: [],
   };
   let finalRoutes = [rootRoute];
 
@@ -97,6 +100,7 @@ export default async function loadRoutes(
         : undefined;
       parentRoute.children.push(route);
     } else if (route.element) {
+      rootRoute.children = rootRoute.children || [];
       rootRoute.children.push(route);
     } else {
       finalRoutes.push(route);

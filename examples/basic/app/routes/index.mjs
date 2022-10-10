@@ -1,7 +1,6 @@
 import { json, useLoaderData, useRouteElementName } from "enhance-remix";
 
 /**
- *
  * @param {import("enhance-remix").LoaderFunctionArgs} args
  */
 export function loader({ request }) {
@@ -12,6 +11,17 @@ export function loader({ request }) {
   }
 
   return json({ greeting });
+}
+
+/**
+ * @arg {import("enhance-remix").MetaFunctionArgs<typeof loader>} args
+ */
+export function meta({ data }) {
+  return {
+    lang: "en-us",
+    title: data.greeting || "Hello World!",
+    description: "This is the description",
+  };
 }
 
 /**

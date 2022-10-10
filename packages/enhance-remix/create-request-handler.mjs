@@ -45,16 +45,77 @@ export default function createRequestHandler(routes, elements) {
       initialState: context,
     });
 
+    let leafMatch = context.matches.slice(-1)[0];
+    let { [leafMatch.route.id]: _, ...parentData } = context.loaderData;
+    /** @type {import("enhance-remix").MetaFunction} */
+    let metaExport = leafMatch.route.meta;
+    let metaObject =
+      typeof metaExport == "function"
+        ? metaExport({
+            data: context.loaderData[leafMatch.route.id],
+            location: context.location,
+            params: leafMatch.params,
+            parentData,
+          })
+        : metaExport;
+
+    let head = "";
+    let lang;
+    if (metaObject) {
+      for (let [name, value] of Object.entries(metaObject)) {
+        if (!value) continue;
+
+        if (["charset", "charSet"].includes(name)) {
+          head += `<meta key="charset" charSet={value as string} />`;
+          continue;
+        }
+
+        if (name === "title") {
+          head += `<title key="title">${String(value)}</title>`;
+          continue;
+        }
+
+        if (name == "lang") {
+          lang = value;
+          continue;
+        }
+
+        let isOpenGraphTag = name.startsWith("og:");
+
+        for (let content of [value].flat()) {
+          if (isOpenGraphTag) {
+            head += `<meta key="${name}" property="${name}" content="${String(
+              content
+            )}" />`;
+            continue;
+          }
+
+          if (typeof content == "string") {
+            head += `<meta name="${name}" content="${content}" />`;
+            continue;
+          }
+
+          head += `<meta ${Object.entries(content)
+            .map(([name, value]) => `${name}="${value}"`)
+            .join(" ")} />`;
+        }
+      }
+    }
+
     let body = html([
-      context.matches.reduceRight((acc, match, index) => {
-        return `<route-${createElementName(
-          match.route.id
-        )}>${acc}</route-${index}>`;
-      }, ""),
+      `<!DOCTYPE html><html ${
+        lang ? `lang=${lang}` : ""
+      }><head>${head}</head>` +
+        context.matches.reduceRight((acc, match, index) => {
+          return `<route-${createElementName(
+            match.route.id
+          )}>${acc}</route-${index}>`;
+        }, "") +
+        "</html>",
     ]);
 
     // TODO: Render using enhance-ssr
-    return new Response(`<!DOCTYPE html>${body}`, {
+    return new Response(body, {
       status: context.statusCode,
       headers: {
         "Content-Type": "text/html",
