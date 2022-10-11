@@ -221,6 +221,7 @@ export default function createRequestHandler(routes, elements) {
 						};
 
 						window.useNavigation = function useNavigation(cb) {
+							cb(window._getNavigation());
 							window._navigationCallbacks.add(cb);
 							return () => {
 								window._navigationCallbacks.delete(cb);
