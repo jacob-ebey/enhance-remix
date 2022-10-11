@@ -1,17 +1,17 @@
 {
-  "type": "module",
-  "name": "enhance-remix",
-  "version": "0.0.1",
-  "description": "Enhance + Remix",
-  "main": "enhance-remix.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "@enhance/ssr": "3.0.9"
-  },
-  "devDependencies": {
-    "@enhance/types": "0.4.0",
-    "literally-html": "0.1.1"
-  }
+	"type": "module",
+	"name": "enhance-remix",
+	"version": "0.0.1",
+	"description": "Enhance + Remix",
+	"main": "enhance-remix.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"@enhance/ssr": "3.0.9"
+	},
+	"devDependencies": {
+		"@enhance/types": "0.4.0",
+		"literally-html": "0.1.1"
+	}
 }
