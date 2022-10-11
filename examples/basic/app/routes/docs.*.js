@@ -3,20 +3,6 @@ import { json, useLoaderData } from "enhance-remix";
 import { loadDocument } from "../docs.js";
 
 /**
- * @param {import("enhance-remix").LoaderFunctionArgs} args
- */
-export function loader({ request }) {
-	let url = new URL(request.url);
-	let doc = loadDocument(url.pathname);
-
-	if (!doc) {
-		throw json("Not found", { status: 404 });
-	}
-
-	return json({ doc });
-}
-
-/**
  * @arg {import("enhance-remix").MetaFunctionArgs<typeof loader>} args
  */
 export function meta({ data }) {
@@ -29,6 +15,20 @@ export function meta({ data }) {
 			(data && data.doc.attributes.description) ||
 			"A useable site as the baseline.",
 	};
+}
+
+/**
+ * @param {import("enhance-remix").LoaderFunctionArgs} args
+ */
+export function loader({ request }) {
+	let url = new URL(request.url);
+	let doc = loadDocument(url.pathname);
+
+	if (!doc) {
+		throw json("Not found", { status: 404 });
+	}
+
+	return json({ doc });
 }
 
 /**
