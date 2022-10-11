@@ -18,6 +18,18 @@ export function meta() {
 export function links() {
 	return [
 		{
+			rel: "icon",
+			href: "https://remix.run/favicon-light.1.png",
+			type: "image/png",
+			media: "(prefers-color-scheme: light)",
+		},
+		{
+			rel: "icon",
+			href: "https://remix.run/favicon-dark.1.png",
+			type: "image/png",
+			media: "(prefers-color-scheme: dark)",
+		},
+		{
 			rel: "stylesheet",
 			href: "https://unpkg.com/awsm.css@3.0.7/dist/awsm.min.css",
 		},
