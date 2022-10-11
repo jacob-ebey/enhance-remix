@@ -1,5 +1,7 @@
 import { ErrorResponse, useLocation, useRouteError } from "enhance-remix";
 
+import Header from "./components/header.js";
+
 /** @type {import("enhance-remix").LinksFunction} */
 export function links() {
 	return [
@@ -8,38 +10,6 @@ export function links() {
 			href: "https://unpkg.com/awsm.css@3.0.7/dist/awsm.min.css",
 		},
 	];
-}
-
-function Header({ pathname }) {
-	return /*html*/ `
-		<header class="header">
-			<h1>Enhance Remix</h1>
-			<p>A useable site as the baseline.</p>
-			<nav>
-				<ul>
-					<li>
-						<a href="/" ${pathname == "/" ? 'aria-current="page"' : ""}>Home</a>
-					</li>
-					<li>
-						<a href="/docs" ${pathname == "/docs" ? 'aria-current="page"' : ""}
-							>Docs</a
-						>
-					</li>
-				</ul>
-			</nav>
-		</header>
-
-		<style>
-			.header h1 {
-				margin: 0;
-				font-size: 1.5em;
-			}
-			.header p {
-				margin: 0;
-				font-size: 0.85em;
-			}
-		</style>
-	`;
 }
 
 /**
@@ -51,9 +21,6 @@ export default function Root({ html, state }) {
 	return html`
 		${Header({ pathname })}
 		<slot></slot>
-		<script>
-			console.log("test");
-		</script>
 	`;
 }
 

@@ -6,6 +6,7 @@
     "dev": "nodemon --watch server.mjs --watch app --watch ../../packages server.js"
   },
   "dependencies": {
+    "compression": "1.7.4",
     "enhance-remix": "0.0.1",
     "enhance-remix-node": "0.0.1",
     "front-matter": "4.0.2",

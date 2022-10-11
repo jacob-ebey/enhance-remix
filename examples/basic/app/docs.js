@@ -15,7 +15,6 @@ export function loadDocument(pathname) {
 	}
 	filename = path.resolve(process.cwd(), "../../", filename);
 
-	console.log(filename);
 	if (!fs.existsSync(filename)) {
 		return null;
 	}
