@@ -1,6 +1,17 @@
 import { useElementName, useLocation } from "enhance-remix";
 
 /**
+ * @arg {import("enhance-remix").MetaFunctionArgs<typeof loader>} args
+ */
+export function meta() {
+	return {
+		lang: "en-us",
+		title: "GET Form (replace) | KitchenSink | Enhance Remix",
+		description: "A useable site as the baseline.",
+	};
+}
+
+/**
  * @type {import("@enhance/types").EnhanceElemFn}
  */
 export default function GetFormReplace({ html, state }) {

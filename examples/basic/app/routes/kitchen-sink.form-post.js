@@ -1,6 +1,17 @@
 import { json, useActionData, useElementName } from "enhance-remix";
 
 /**
+ * @arg {import("enhance-remix").MetaFunctionArgs<typeof loader>} args
+ */
+export function meta() {
+	return {
+		lang: "en-us",
+		title: "POST Form | KitchenSink | Enhance Remix",
+		description: "A useable site as the baseline.",
+	};
+}
+
+/**
  * @param {import("enhance-remix").ActionFunctionArgs} args
  */
 export async function action({ request }) {
