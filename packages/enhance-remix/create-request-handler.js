@@ -1,5 +1,8 @@
 import enhance from "@enhance/ssr";
-import { unstable_createStaticHandler as createStaticHandler } from "@remix-run/router";
+import {
+	unstable_createStaticHandler as createStaticHandler,
+	ErrorResponse,
+} from "@remix-run/router";
 
 import { RemixForm } from "./elements.js";
 
@@ -10,6 +13,7 @@ import { RemixForm } from "./elements.js";
  * @returns {import("./enhance-remix").RequestHandler}
  */
 export default function createRequestHandler(routes, elements) {
+	let rootRoute = false;
 	function recurseRoutesAndAssignId(route) {
 		if (route.element) {
 			route.element._elementName = "route-" + createElementName(route.id);
@@ -19,6 +23,10 @@ export default function createRequestHandler(routes, elements) {
 		}
 	}
 	for (let route of routes) {
+		if (route.id == "root") {
+			rootRoute = route;
+		}
+
 		recurseRoutesAndAssignId(route);
 	}
 	return async (request) => {
@@ -30,7 +38,38 @@ export default function createRequestHandler(routes, elements) {
 		}
 
 		if (context.matches[0].route.id == "__shim-404-route__") {
-			return new Response("Not Found", { status: 404 });
+			if (!rootRoute) {
+				return new Response(
+					/*html*/ `<!DOCTYPE>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>404 Not Found</title>
+</head>
+<body>
+	<main>
+		<article>
+			<h1>404 Not Found</h1>
+			<p>Export an <code>ErrorBoundary</code> from your root route to handle 404's.</p>
+		</article>
+	</main>
+</html>
+`,
+					{ status: 404 }
+				);
+			}
+
+			let url = new URL(request.url);
+			context.matches = [
+				{
+					params: {},
+					pathname: url.pathname,
+					route: rootRoute,
+				},
+			];
+			context.errors = {
+				root: new ErrorResponse(404, "Not Found", null),
+			};
 		}
 
 		let finalElements = {
@@ -162,6 +201,10 @@ export default function createRequestHandler(routes, elements) {
 					${markup}
 
 					<script>
+						window._transitions = window._transitions || [];
+						window._navigationCallbacks =
+							window._navigationCallbacks || new Set();
+
 						window._getNavigation = function getNavigation() {
 							let transition = window._transitions.slice(-1)[0];
 							if (!transition) {
@@ -174,17 +217,13 @@ export default function createRequestHandler(routes, elements) {
 								url: transition.url,
 							};
 						};
-						window._transitions = window._transitions || [];
-						window._navigationCallbacks =
-							window._navigationCallbacks || new Set();
-						window.useNavigation =
-							window.useNavigation ||
-							function useNavigation(cb) {
-								window._navigationCallbacks.add(cb);
-								return () => {
-									window._navigationCallbacks.delete(cb);
-								};
+
+						window.useNavigation = function useNavigation(cb) {
+							window._navigationCallbacks.add(cb);
+							return () => {
+								window._navigationCallbacks.delete(cb);
 							};
+						};
 					</script>
 				</body>
 			</html> `;

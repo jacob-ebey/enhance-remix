@@ -29,6 +29,45 @@ export function RemixForm({ html, state }) {
 					this.form.addEventListener("submit", (event) => {
 						let replace = typeof this.getAttribute("replace") == "string";
 
+						if (event._transition) {
+							console.log(event._transition.url.search);
+							let clonedForm = document.createElement("form");
+							clonedForm.style.visibility = "hidden";
+							clonedForm.setAttribute("action", event._transition.url.href);
+							clonedForm.setAttribute("method", event._transition.method);
+							clonedForm.setAttribute("enctype", event._transition.enctype);
+
+							if (event._transition.method == "GET") {
+								for (let [name, value] of event._transition.url.searchParams) {
+									let input = document.createElement("input");
+									input.setAttribute("type", "hidden");
+									input.setAttribute("name", name);
+									input.setAttribute("value", value);
+									clonedForm.appendChild(input);
+								}
+							} else {
+								for (let [name, value] of event._transition.formData) {
+									let input = document.createElement("input");
+									if (typeof value == "string") {
+										input.setAttribute("type", "hidden");
+										input.setAttribute("name", name);
+										input.setAttribute("value", value);
+									} else {
+										input.setAttribute("type", "file");
+										input.setAttribute("name", name);
+										let dataTransfer = new DataTransfer();
+										dataTransfer.items.add(value);
+										input.files = dataTransfer.files;
+									}
+									clonedForm.appendChild(input);
+								}
+							}
+							document.body.appendChild(clonedForm);
+							clonedForm.submit();
+							event.preventDefault();
+							return;
+						}
+
 						let target = event.submitter || event.currentTarget;
 
 						let action, method, enctype, formData;
@@ -122,40 +161,46 @@ export function RemixForm({ html, state }) {
 							}
 						}
 
-						window._transitions.forEach((c) => c.abort());
+						window._transitions.forEach((c) => c.controller.abort());
 						window._transitions = [];
 
 						let controller = new AbortController();
 						let signal = controller.signal;
-						let transition = { method, url, formData, controller };
+						let transition = { method, url, formData, controller, enctype };
 						window._transitions.push(transition);
 						emitChange();
 
 						if (!replace) {
-							return;
+							let rebroadcastEvent = new event.constructor(event.type, event);
+							rebroadcastEvent._transition = transition;
+							setTimeout(() => {
+								this.form.dispatchEvent(rebroadcastEvent);
+							}, 1);
+						} else {
+							fetch(url.href, {
+								method,
+								headers,
+								body,
+								signal,
+							})
+								.then(async (response) => {
+									if (signal.aborted) return;
+
+									history.replaceState({}, "", url.href);
+									document.documentElement.innerHTML = await response.text();
+									executeScriptElements(
+										document.getElementsByTagName("body")[0]
+									);
+								})
+								.catch((reason) => {
+									console.error(reason);
+								})
+								.then(() => {
+									if (signal.aborted) return;
+									window._transitions = [];
+									emitChange();
+								});
 						}
-
-						fetch(url.href, {
-							method,
-							headers,
-							body,
-							signal,
-						})
-							.then(async (response) => {
-								if (signal.aborted) return;
-
-								history.replaceState({}, "", url.href);
-								document.documentElement.innerHTML = await response.text();
-								executeScriptElements(document.getElementsByTagName("body")[0]);
-							})
-							.catch((reason) => {
-								console.error(reason);
-							})
-							.then(() => {
-								if (signal.aborted) return;
-								window._transitions = [];
-								emitChange();
-							});
 
 						event.preventDefault();
 					});

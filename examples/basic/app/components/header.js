@@ -9,9 +9,15 @@ export default function Header({ pathname }) {
 						<a href="/" ${pathname == "/" ? 'aria-current="page"' : ""}>Home</a>
 					</li>
 					<li>
-						<a href="/docs" ${pathname == "/docs" ? 'aria-current="page"' : ""}
-							>Docs</a
+						<a href="/docs" ${
+							pathname.startsWith("/docs") ? 'aria-current="page"' : ""
+						}>Docs</a
 						>
+					</li>
+					<li>
+						<a href="/kitchen-sink" ${
+							pathname.startsWith("/kitchen-sink") ? 'aria-current="page"' : ""
+						}>Kitchen Sink</a>
 					</li>
 				</ul>
 			</nav>
