@@ -5,9 +5,7 @@ import { json, useActionData, useElementName } from "enhance-remix";
  */
 export function meta() {
 	return {
-		lang: "en-us",
 		title: "POST Form (replace) | KitchenSink | Enhance Remix",
-		description: "A useable site as the baseline.",
 	};
 }
 

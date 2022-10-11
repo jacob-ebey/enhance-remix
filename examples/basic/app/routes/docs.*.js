@@ -21,12 +21,13 @@ export function loader({ request }) {
  */
 export function meta({ data }) {
 	return {
-		lang: "en-us",
 		title:
 			data && data.doc.attributes.title
 				? `${data.doc.attributes.title} | Enhance Remix`
 				: "Enhance Remix",
-		description: "A useable site as the baseline.",
+		description:
+			(data && data.doc.attributes.description) ||
+			"A useable site as the baseline.",
 	};
 }
 

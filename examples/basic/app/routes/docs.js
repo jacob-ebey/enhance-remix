@@ -3,6 +3,21 @@ import { json, useLoaderData } from "enhance-remix";
 import { loadDocument } from "../docs.js";
 
 /**
+ * @arg {import("enhance-remix").MetaFunctionArgs<typeof loader>} args
+ */
+export function meta({ data }) {
+	return {
+		title:
+			data && data.doc && data.doc.attributes.title
+				? `${data.doc.attributes.title} | Enhance Remix`
+				: "Enhance Remix",
+		description:
+			(data && data.doc && data.doc.attributes.description) ||
+			"A useable site as the baseline.",
+	};
+}
+
+/**
  * @param {import("enhance-remix").LoaderFunctionArgs} args
  */
 export function loader({ request }) {
@@ -19,20 +34,6 @@ export function loader({ request }) {
 	}
 
 	return json({ doc });
-}
-
-/**
- * @arg {import("enhance-remix").MetaFunctionArgs<typeof loader>} args
- */
-export function meta({ data }) {
-	return {
-		lang: "en-us",
-		title:
-			data && data.doc.attributes.title
-				? `${data.doc.attributes.title} | Enhance Remix`
-				: "Enhance Remix",
-		description: "A useable site as the baseline.",
-	};
 }
 
 /**

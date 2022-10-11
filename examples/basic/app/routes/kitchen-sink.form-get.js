@@ -5,9 +5,7 @@ import { useElementName, useLocation } from "enhance-remix";
  */
 export function meta() {
 	return {
-		lang: "en-us",
 		title: "GET Form | KitchenSink | Enhance Remix",
-		description: "A useable site as the baseline.",
 	};
 }
 

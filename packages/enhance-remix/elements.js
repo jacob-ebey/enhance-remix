@@ -30,7 +30,6 @@ export function RemixForm({ html, state }) {
 						let replace = typeof this.getAttribute("replace") == "string";
 
 						if (event._transition) {
-							console.log(event._transition.url.search);
 							let clonedForm = document.createElement("form");
 							clonedForm.style.visibility = "hidden";
 							clonedForm.setAttribute("action", event._transition.url.href);

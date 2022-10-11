@@ -5,9 +5,7 @@ import { useLocation } from "enhance-remix";
  */
 export function meta() {
 	return {
-		lang: "en-us",
 		title: "KitchenSink | Enhance Remix",
-		description: "A useable site as the baseline.",
 	};
 }
 

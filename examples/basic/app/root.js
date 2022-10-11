@@ -2,6 +2,18 @@ import { ErrorResponse, useLocation, useRouteError } from "enhance-remix";
 
 import Header from "./components/header.js";
 
+/**
+ * @arg {import("enhance-remix").MetaFunctionArgs<typeof loader>} args
+ */
+export function meta() {
+	return {
+		lang: "en-us",
+		viewport: "width=device-width,initial-scale=1",
+		title: "Enhance Remix",
+		description: "A useable site as the baseline.",
+	};
+}
+
 /** @type {import("enhance-remix").LinksFunction} */
 export function links() {
 	return [

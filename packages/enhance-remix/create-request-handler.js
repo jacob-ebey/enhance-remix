@@ -111,19 +111,41 @@ export default function createRequestHandler(routes, elements) {
 			initialState: context,
 		});
 
-		let leafMatch = context.matches.slice(-1)[0];
-		let { [leafMatch.route.id]: _, ...parentData } = context.loaderData;
-		/** @type {import("./enhance-remix").MetaFunction} */
-		let metaExport = leafMatch.route.meta;
-		let metaObject =
-			typeof metaExport == "function"
-				? metaExport({
-						data: context.loaderData[leafMatch.route.id],
-						location: context.location,
-						params: leafMatch.params,
-						parentData,
-				  })
-				: metaExport;
+		let matchesToRender = [];
+		let metaObject;
+		for (let match of context.matches) {
+			let { [match.route.id]: _, ...parentData } = context.loaderData;
+			/** @type {import("./enhance-remix").MetaFunction} */
+			let metaExport = match.route.meta;
+			let newMetaObject =
+				typeof metaExport == "function"
+					? metaExport({
+							data: context.loaderData[match.route.id],
+							location: context.location,
+							params: match.params,
+							parentData,
+					  })
+					: metaExport;
+
+			metaObject = { ...metaObject, ...newMetaObject };
+
+			if (context.errors && match.route.id in context.errors) {
+				matchesToRender.push(match);
+				break;
+			}
+			matchesToRender.push(match);
+		}
+
+		let markup = "";
+		for (let i = matchesToRender.length - 1; i >= 0; i--) {
+			let match = matchesToRender[i];
+			let elementName = createElementName(match.route.id);
+			if (context.errors && match.route.id in context.errors) {
+				markup = `<error-route-${elementName}></error-route-${elementName}>`;
+				continue;
+			}
+			markup = `<route-${elementName}>${markup}</route-${elementName}>`;
+		}
 
 		let head = "";
 		let lang;
@@ -170,26 +192,6 @@ export default function createRequestHandler(routes, elements) {
 						.join(" ")}>`;
 				}
 			}
-		}
-
-		let matchesToRender = [];
-		for (let match of context.matches) {
-			if (context.errors && match.route.id in context.errors) {
-				matchesToRender.push(match);
-				break;
-			}
-			matchesToRender.push(match);
-		}
-
-		let markup = "";
-		for (let i = matchesToRender.length - 1; i >= 0; i--) {
-			let match = matchesToRender[i];
-			let elementName = createElementName(match.route.id);
-			if (context.errors && match.route.id in context.errors) {
-				markup = `<error-route-${elementName}></error-route-${elementName}>`;
-				continue;
-			}
-			markup = `<route-${elementName}>${markup}</route-${elementName}>`;
 		}
 
 		let body = html`<!DOCTYPE html>
