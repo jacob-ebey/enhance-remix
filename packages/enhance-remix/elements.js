@@ -62,6 +62,10 @@ export function RemixForm({ html, state }) {
 								}
 							}
 							document.body.appendChild(clonedForm);
+							window._transitions.forEach((c) => c.controller.abort());
+							window._transitions = [];
+							emitChange();
+
 							clonedForm.submit();
 							event.preventDefault();
 							return;
