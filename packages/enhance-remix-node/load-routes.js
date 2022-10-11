@@ -82,6 +82,7 @@ export default async function loadRoutes(
 				links: rootRouteModule.links,
 				meta: rootRouteModule.meta,
 				element: rootRouteModule.default,
+				errorElement: rootRouteModule.ErrorBoundary,
 		  }
 		: undefined;
 	let finalRoutes = rootRoute ? [rootRoute] : [];
@@ -144,7 +145,6 @@ function createRoutePathInfo(routesDir, routeFile) {
 		index = true;
 	}
 
-	console.log(pathSegments.join("/"));
 	return { path: pathSegments.join("/") || undefined, index };
 }
 

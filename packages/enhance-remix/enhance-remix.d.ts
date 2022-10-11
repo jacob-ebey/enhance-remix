@@ -2,10 +2,12 @@ import { type EnhanceElemFn } from "@enhance/types";
 import {
 	type AgnosticDataRouteObject,
 	type LoaderFunctionArgs,
+	type Location,
 	type Params,
 } from "@remix-run/router";
 
 export {
+	ErrorResponse,
 	type ActionFunctionArgs,
 	type LoaderFunctionArgs,
 } from "@remix-run/router";
@@ -281,6 +283,13 @@ export function useActionData<Data = unknown>(
 ): SerializeFrom<Data>;
 
 export function useElementName(fn: EnhanceElemFn): string;
+
+export function useRouteError(
+	fn: EnhanceElemFn,
+	state: { store: Record<any, any> }
+): unknown;
+
+export function useLocation(state: { store: Record<any, any> }): Location;
 
 export function useLoaderData<Data = unknown>(
 	fn: EnhanceElemFn,

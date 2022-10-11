@@ -17,10 +17,8 @@ export function RemixForm({ html, state }) {
 
 		<script type="module">
 			function emitChange() {
-				setTimeout(() => {
-					let navigation = window._getNavigation();
-					window._navigationCallbacks.forEach((cb) => cb(navigation));
-				}, 1);
+				let navigation = window._getNavigation();
+				window._navigationCallbacks.forEach((cb) => cb(navigation));
 			}
 
 			class RemixFormElement extends HTMLElement {
@@ -30,7 +28,6 @@ export function RemixForm({ html, state }) {
 
 					this.form.addEventListener("submit", (event) => {
 						let replace = typeof this.getAttribute("replace") == "string";
-						if (!replace) return;
 
 						let target = event.submitter || event.currentTarget;
 
@@ -133,6 +130,10 @@ export function RemixForm({ html, state }) {
 						let transition = { method, url, formData, controller };
 						window._transitions.push(transition);
 						emitChange();
+
+						if (!replace) {
+							return;
+						}
 
 						fetch(url.href, {
 							method,

@@ -10,7 +10,7 @@ export function loader({ request }) {
 	let doc = loadDocument(url.pathname);
 
 	if (!doc) {
-		throw new Error("Home page doc not found");
+		throw json("Not found", { status: 404 });
 	}
 
 	return json({ doc });
@@ -22,7 +22,10 @@ export function loader({ request }) {
 export function meta({ data }) {
 	return {
 		lang: "en-us",
-		title: (data && data.doc.attributes.title) || "Enhance Remix",
+		title:
+			data && data.doc.attributes.title
+				? `${data.doc.attributes.title} | Enhance Remix`
+				: "Enhance Remix",
 		description: "A useable site as the baseline.",
 	};
 }
@@ -30,13 +33,9 @@ export function meta({ data }) {
 /**
  * @type {import("@enhance/types").EnhanceElemFn}
  */
-export default function Index({ html, state }) {
+export default function Doc({ html, state }) {
 	/** @type {import("enhance-remix").SerializeFrom<typeof loader>} */
-	let { doc } = useLoaderData(Index, state);
+	let { doc } = useLoaderData(Doc, state);
 
-	return html`
-		<main>
-			<article>${doc.html}</article>
-		</main>
-	`;
+	return html` <article>${doc.html}</article> `;
 }

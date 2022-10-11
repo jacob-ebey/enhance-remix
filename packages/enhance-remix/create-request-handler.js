@@ -45,6 +45,11 @@ export default function createRequestHandler(routes, elements) {
 			finalElements[`route-${createElementName(match.route.id)}`] =
 				match.route.element;
 
+			if (match.route.errorElement) {
+				finalElements[`error-route-${createElementName(match.route.id)}`] =
+					match.route.errorElement;
+			}
+
 			if (match.route.links) {
 				/** @type {import("./enhance-remix").LinkDescriptor} */
 				let routeLinks =
@@ -128,47 +133,61 @@ export default function createRequestHandler(routes, elements) {
 			}
 		}
 
-		head += html`
-			<script>
-				function getNavigation() {
-					let transition = window._transitions.slice(-1)[0];
-					if (!transition) {
-						return { state: "idle" };
-					}
+		let matchesToRender = [];
+		for (let match of context.matches) {
+			if (context.errors && match.route.id in context.errors) {
+				matchesToRender.push(match);
+				break;
+			}
+			matchesToRender.push(match);
+		}
 
-					return {
-						state: transition.method === "GET" ? "loading" : "submitting",
-						formData: transition.formData,
-						url: transition.url,
-					};
-				}
-				window._getNavigation = getNavigation;
-				window._transitions = window._transitions || [];
-				window._navigationCallbacks = window._navigationCallbacks || new Set();
-				window.useNavigation =
-					window.useNavigation ||
-					function useNavigation(cb) {
-						window._navigationCallbacks.add(cb);
-						return () => {
-							window._navigationCallbacks.delete(cb);
+		let markup = "";
+		for (let i = matchesToRender.length - 1; i >= 0; i--) {
+			let match = matchesToRender[i];
+			let elementName = createElementName(match.route.id);
+			if (context.errors && match.route.id in context.errors) {
+				markup = `<error-route-${elementName}></error-route-${elementName}>`;
+				continue;
+			}
+			markup = `<route-${elementName}>${markup}</route-${elementName}>`;
+		}
+
+		let body = html`<!DOCTYPE html>
+			<html ${lang ? `lang=${lang}` : ""}>
+				<head>
+					${links} ${head}
+				</head>
+				<body>
+					${markup}
+
+					<script>
+						window._getNavigation = function getNavigation() {
+							let transition = window._transitions.slice(-1)[0];
+							if (!transition) {
+								return { state: "idle" };
+							}
+
+							return {
+								state: transition.method === "GET" ? "loading" : "submitting",
+								formData: transition.formData,
+								url: transition.url,
+							};
 						};
-					};
-			</script>
-		`;
-
-		let body = html([
-			`<!DOCTYPE html><html ${
-				lang ? `lang=${lang}` : ""
-			}><head>${links}${head}</head><body>` +
-				context.matches.reduceRight((acc, match, index) => {
-					return match.route.element
-						? `<route-${createElementName(
-								match.route.id
-						  )}>${acc}</route-${index}>`
-						: acc;
-				}, "") +
-				"</body></html>",
-		]);
+						window._transitions = window._transitions || [];
+						window._navigationCallbacks =
+							window._navigationCallbacks || new Set();
+						window.useNavigation =
+							window.useNavigation ||
+							function useNavigation(cb) {
+								window._navigationCallbacks.add(cb);
+								return () => {
+									window._navigationCallbacks.delete(cb);
+								};
+							};
+					</script>
+				</body>
+			</html> `;
 
 		// TODO: Render using enhance-ssr
 		return new Response(body, {

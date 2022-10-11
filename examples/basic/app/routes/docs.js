@@ -7,10 +7,15 @@ import { loadDocument } from "../docs.js";
  */
 export function loader({ request }) {
 	let url = new URL(request.url);
-	let doc = loadDocument(url.pathname);
+
+	if (url.pathname != "/docs") {
+		return json({});
+	}
+
+	let doc = loadDocument("/docs");
 
 	if (!doc) {
-		throw new Error("Home page doc not found");
+		throw json("Not found", { status: 404 });
 	}
 
 	return json({ doc });
@@ -22,7 +27,10 @@ export function loader({ request }) {
 export function meta({ data }) {
 	return {
 		lang: "en-us",
-		title: (data && data.doc.attributes.title) || "Enhance Remix",
+		title:
+			data && data.doc.attributes.title
+				? `${data.doc.attributes.title} | Enhance Remix`
+				: "Enhance Remix",
 		description: "A useable site as the baseline.",
 	};
 }
@@ -30,13 +38,19 @@ export function meta({ data }) {
 /**
  * @type {import("@enhance/types").EnhanceElemFn}
  */
-export default function Index({ html, state }) {
+export default function Docs({ html, state }) {
 	/** @type {import("enhance-remix").SerializeFrom<typeof loader>} */
-	let { doc } = useLoaderData(Index, state);
+	let { doc } = useLoaderData(Docs, state);
 
 	return html`
 		<main>
-			<article>${doc.html}</article>
+			<nav>
+				<ul>
+					<li><a href="/docs">Overview</a></li>
+					<li><a href="/docs/conventions">Conventions</a></li>
+				</ul>
+			</nav>
+			${doc ? `<article>${doc.html}</article>` : `<slot></slot>`}
 		</main>
 	`;
 }

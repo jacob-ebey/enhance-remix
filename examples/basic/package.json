@@ -7,10 +7,13 @@
   },
   "dependencies": {
     "enhance-remix": "0.0.1",
-    "enhance-remix-node": "0.0.1"
+    "enhance-remix-node": "0.0.1",
+    "front-matter": "4.0.2",
+    "marked": "4.1.1"
   },
   "devDependencies": {
     "@enhance/types": "0.4.0",
+    "@types/marked": "4.0.7",
     "@types/node": "18.8.4",
     "literally-html": "0.1.1",
     "nodemon": "2.0.20"
