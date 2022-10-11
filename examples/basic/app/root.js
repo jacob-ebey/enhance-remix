@@ -8,6 +8,7 @@ import Header from "./components/header.js";
 export function meta() {
 	return {
 		lang: "en-us",
+		charset: "utf-8",
 		viewport: "width=device-width,initial-scale=1",
 		title: "Enhance Remix",
 		description: "A useable site as the baseline.",
