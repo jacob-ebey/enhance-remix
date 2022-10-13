@@ -1,4 +1,5 @@
 {
+	"private": true,
 	"type": "module",
 	"name": "enhance-remix-basic-example",
 	"description": "A basic example of how to use enhance-remix",
