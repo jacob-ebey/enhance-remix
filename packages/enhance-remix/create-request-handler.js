@@ -227,10 +227,21 @@ export default function createRequestHandler(routes, elements) {
 								window._navigationCallbacks.delete(cb);
 							};
 						};
+
+						window.addEventListener("popstate", () => {
+							console.log({
+								_transitionsNeedEmit: window._transitionsNeedEmit,
+							});
+							if (window._transitionsNeedEmit) {
+								let navigation = window._getNavigation();
+								for (let cb of window._navigationCallbacks) {
+									cb(navigation);
+								}
+							}
+						});
 					</script>
 				</body>
 			</html> `;
-
 		// TODO: Render using enhance-ssr
 		return new Response(body, {
 			status: context.statusCode,

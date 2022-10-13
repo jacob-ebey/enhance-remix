@@ -59,6 +59,7 @@ export default function GetForm({ html, state }) {
 					if (this.unsubscribe) {
 						this.unsubscribe();
 					}
+
 					this.unsubscribe = window.useNavigation((navigation) => {
 						if (navigation.state == "loading") {
 							this.button.disabled = true;
