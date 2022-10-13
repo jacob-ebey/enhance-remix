@@ -48,7 +48,7 @@ export default function PostFormReplace({ html, state }) {
 
 		<p>
 			<a
-				href="https://github.com/jacob-ebey/enhance-remix/blob/main/examples/basic/app/routes/kitchen-sink.form-post-replace.js"
+				href="https://github.com/jacob-ebey/enhance-remix/blob/main/examples/docs/app/routes/kitchen-sink.form-post-replace.js"
 				rel="noopener noreferrer"
 				target="_blank"
 			>

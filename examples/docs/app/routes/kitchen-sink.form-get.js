@@ -39,7 +39,7 @@ export default function GetForm({ html, state }) {
 
 		<p>
 			<a
-				href="https://github.com/jacob-ebey/enhance-remix/blob/main/examples/basic/app/routes/kitchen-sink.form-get.js"
+				href="https://github.com/jacob-ebey/enhance-remix/blob/main/examples/docs/app/routes/kitchen-sink.form-get.js"
 				rel="noopener noreferrer"
 				target="_blank"
 			>

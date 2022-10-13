@@ -39,7 +39,7 @@ export default function GetFormReplace({ html, state }) {
 
 		<p>
 			<a
-				href="https://github.com/jacob-ebey/enhance-remix/blob/main/examples/basic/app/routes/kitchen-sink.form-get-replace.js"
+				href="https://github.com/jacob-ebey/enhance-remix/blob/main/examples/docs/app/routes/kitchen-sink.form-get-replace.js"
 				rel="noopener noreferrer"
 				target="_blank"
 			>

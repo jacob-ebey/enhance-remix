@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"type": "module",
-	"name": "enhance-remix-basic-example",
+	"name": "enhance-remix-docs-example",
 	"description": "A basic example of how to use enhance-remix",
 	"scripts": {
 		"dev": "nodemon --watch server.js --watch app --watch ../../packages server.js"
