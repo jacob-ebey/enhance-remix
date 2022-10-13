@@ -2,7 +2,6 @@ import * as fs from "fs";
 import * as path from "path";
 
 import { DefaultRoot } from "enhance-remix";
-import { invariant } from "@remix-run/router";
 
 /**
  * Load the routes for the app.
@@ -68,7 +67,7 @@ export default async function loadRoutes(
 
 	// 3. Combine and sort the routes by id
 
-	let rootRouteId = createRouteId(appDir, rootRouteFile);
+	let rootRouteId = "root";
 	if (rootRouteModule && rootRouteModule.default) {
 		rootRouteModule.default._routeId = rootRouteId;
 	}

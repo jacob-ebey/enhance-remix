@@ -83,7 +83,7 @@ server.listen(port, () => {
 });
 ```
 
-Create your first route at `routes/index.js`:
+Create your first route at `app/routes/index.js`:
 
 ```js
 import { json, useLoaderData } from "enhance-remix";
