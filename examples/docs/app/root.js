@@ -8,7 +8,7 @@ import Header from "./components/header.js";
 
 const require = createRequire(import.meta.url);
 const awsmStyles = fs.readFileSync(
-	path.resolve(require.resolve("awsm.css"), "../dist/awsm.css"),
+	path.resolve(require.resolve("awsm.css"), "../dist/awsm.min.css"),
 	"utf8"
 );
 
