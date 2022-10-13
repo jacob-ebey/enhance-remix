@@ -242,7 +242,7 @@ export default function createRequestHandler(routes, elements) {
 					</script>
 				</body>
 			</html> `;
-		// TODO: Render using enhance-ssr
+
 		return new Response(body, {
 			status: context.statusCode,
 			headers: {
