@@ -7,6 +7,7 @@
 		"dev": "nodemon --watch server.js --watch app --watch ../../packages server.js"
 	},
 	"dependencies": {
+		"awsm.css": "3.0.7",
 		"compression": "1.7.4",
 		"enhance-remix": "*",
 		"enhance-remix-node": "*",

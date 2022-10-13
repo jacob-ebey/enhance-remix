@@ -1,6 +1,16 @@
+import * as fs from "fs";
+import * as path from "path";
+import { createRequire } from "module";
+
 import { ErrorResponse, useLocation, useRouteError } from "enhance-remix";
 
 import Header from "./components/header.js";
+
+const require = createRequire(import.meta.url);
+const awsmStyles = fs.readFileSync(
+	path.resolve(require.resolve("awsm.css"), "../dist/awsm.css"),
+	"utf8"
+);
 
 /**
  * @arg {import("enhance-remix").MetaFunctionArgs<typeof loader>} args
@@ -30,15 +40,12 @@ export function links() {
 			type: "image/png",
 			media: "(prefers-color-scheme: dark)",
 		},
-		{
-			rel: "stylesheet",
-			href: "https://unpkg.com/awsm.css@3.0.7/dist/awsm.min.css",
-		},
 	];
 }
 
 function Styles() {
 	return /*html*/ `
+		<style>${awsmStyles}</style>
 		<style>
 			ul, p+ul {
 				margin-top: 1em;
