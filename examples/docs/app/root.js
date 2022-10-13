@@ -37,6 +37,17 @@ export function links() {
 	];
 }
 
+function Styles() {
+	return /*html*/ `
+		<style>
+			ul, p+ul {
+				margin-top: 1em;
+				margin-bottom: 1em;
+			}
+		</style>
+	`;
+}
+
 /**
  * @type {import("@enhance/types").EnhanceElemFn}
  */
@@ -44,7 +55,7 @@ export default function Root({ html, state }) {
 	let { pathname } = useLocation(state);
 
 	return html`
-		${Header({ pathname })}
+		${Styles()} ${Header({ pathname })}
 		<slot></slot>
 	`;
 }
@@ -62,7 +73,7 @@ export function ErrorBoundary({ html, state }) {
 	}
 
 	return html`
-		${Header({ pathname })}
+		${Styles()} ${Header({ pathname })}
 		<main>
 			<article>
 				<h1>${message}</h1>

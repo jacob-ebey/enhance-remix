@@ -1,6 +1,16 @@
+import * as fs from "fs";
+import * as path from "path";
+import { createRequire } from "module";
+
 import { json, useLoaderData } from "enhance-remix";
 
 import { loadDocument } from "../docs.js";
+
+const require = createRequire(import.meta.url);
+const hljsStyles = fs.readFileSync(
+	path.resolve(require.resolve("highlight.js"), "../../styles/github.css"),
+	"utf8"
+);
 
 /**
  * @arg {import("enhance-remix").MetaFunctionArgs<typeof loader>} args
@@ -47,11 +57,16 @@ export default function Docs({ html, state }) {
 		<main>
 			<nav>
 				<ul>
-					<li><a href="/docs">Overview</a></li>
+					<li><a href="/docs">Getting Started</a></li>
 					<li><a href="/docs/conventions">Conventions</a></li>
+					<li><a href="/docs/api">API</a></li>
 				</ul>
 			</nav>
 			${doc ? `<article>${doc.html}</article>` : `<slot></slot>`}
 		</main>
+
+		<style>
+			${hljsStyles}
+		</style>
 	`;
 }

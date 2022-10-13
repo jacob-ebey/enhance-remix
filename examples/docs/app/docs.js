@@ -3,6 +3,7 @@ import * as path from "path";
 
 import fm from "front-matter";
 import { marked } from "marked";
+import hljs from "highlight.js";
 
 export function loadDocument(pathname) {
 	let filename;
@@ -23,7 +24,13 @@ export function loadDocument(pathname) {
 
 	let { attributes, body } = fm(content);
 
-	let html = marked(body);
+	let html = marked(body, {
+		highlight: (code, lang) => {
+			let language = hljs.getLanguage(lang) ? lang : "plaintext";
+			return hljs.highlight(code, { language }).value;
+		},
+		langPrefix: "hljs language-",
+	});
 
 	return { attributes, html };
 }

@@ -10,6 +10,7 @@
 		"enhance-remix": "0.0.1",
 		"enhance-remix-node": "0.0.1",
 		"front-matter": "4.0.2",
+		"highlight.js": "11.6.0",
 		"marked": "4.1.1"
 	},
 	"devDependencies": {
