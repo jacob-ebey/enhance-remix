@@ -1,5 +1,11 @@
 # enhance-remix
 
+## 0.0.2
+
+### Patch Changes
+
+- [`9a86a3a`](https://github.com/jacob-ebey/enhance-remix/commit/9a86a3a53134a9e010a8ad38320c587593d3267b) Thanks [@jacob-ebey](https://github.com/jacob-ebey)! - update to support no root route
+
 ## 0.0.1
 
 ### Patch Changes
