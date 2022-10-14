@@ -64,9 +64,6 @@ export default function GetForm({ html, state }) {
 						if (navigation.state == "loading") {
 							this.button.disabled = true;
 							this.legend.textContent = "Loading...";
-						} else {
-							this.button.disabled = false;
-							this.legend.textContent = "Say Hello";
 						}
 					});
 				}

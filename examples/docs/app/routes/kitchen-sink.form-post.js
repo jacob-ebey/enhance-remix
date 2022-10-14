@@ -72,9 +72,6 @@ export default function PostForm({ html, state }) {
 						if (navigation.state == "submitting") {
 							this.button.disabled = true;
 							this.legend.textContent = "Submitting...";
-						} else {
-							this.button.disabled = false;
-							this.legend.textContent = "Say Hello";
 						}
 					});
 				}
