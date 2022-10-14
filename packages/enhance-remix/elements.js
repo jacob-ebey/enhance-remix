@@ -202,17 +202,11 @@ export function RemixForm({ html, state }) {
 							})
 								.then(async (response) => {
 									if (signal.aborted) return;
-
-									history.replaceState({}, "", url.href);
-									//document.documentElement.innerHTML = await response.text();
-									//let shadow = document.createDocumentFragment();
 									let shadow = document.createElement("html");
 									shadow.innerHTML = await response.text();
-									console.log(shadow);
+
+									history.replaceState({}, "", url.href);
 									morphdom(document.documentElement, shadow);
-									// executeScriptElements(
-									// 	document.getElementsByTagName("body")[0]
-									// );
 								})
 								.catch((reason) => {
 									console.error(reason);
@@ -227,22 +221,6 @@ export function RemixForm({ html, state }) {
 						event.preventDefault();
 					});
 				}
-			}
-
-			function executeScriptElements(containerElement) {
-				const scriptElements = containerElement.querySelectorAll("script");
-
-				Array.from(scriptElements).forEach((scriptElement) => {
-					const clonedElement = document.createElement("script");
-
-					Array.from(scriptElement.attributes).forEach((attribute) => {
-						clonedElement.setAttribute(attribute.name, attribute.value);
-					});
-
-					clonedElement.text = scriptElement.text;
-
-					scriptElement.parentNode.replaceChild(clonedElement, scriptElement);
-				});
 			}
 
 			function isHtmlElement(obj) {
