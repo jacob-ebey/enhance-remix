@@ -48,6 +48,7 @@ export default function GetFormReplace({ html, state }) {
 		</p>
 
 		<script type="module">
+			console.log("HERE!");
 			class GetFormReplaceElementRoute extends HTMLElement {
 				constructor() {
 					super();

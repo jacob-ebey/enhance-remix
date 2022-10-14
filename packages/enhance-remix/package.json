@@ -8,7 +8,8 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
-		"@enhance/ssr": "3.0.9"
+		"@enhance/ssr": "3.0.9",
+		"morphdom": "2.6.1"
 	},
 	"devDependencies": {
 		"@enhance/types": "0.4.0",

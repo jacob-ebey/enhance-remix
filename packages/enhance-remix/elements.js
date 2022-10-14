@@ -1,3 +1,12 @@
+import * as fs from "fs";
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+const morphdom = fs.readFileSync(
+	require.resolve("morphdom/dist/morphdom-umd.min.js"),
+	"utf8"
+);
+
 /**
  * @type {import('@enhance/types').EnhanceElemFn}
  */
@@ -14,6 +23,10 @@ export function RemixForm({ html, state }) {
 		>
 			<slot></slot>
 		</form>
+
+		<script>
+			${morphdom};
+		</script>
 
 		<script type="module">
 			function emitChange() {
@@ -191,10 +204,15 @@ export function RemixForm({ html, state }) {
 									if (signal.aborted) return;
 
 									history.replaceState({}, "", url.href);
-									document.documentElement.innerHTML = await response.text();
-									executeScriptElements(
-										document.getElementsByTagName("body")[0]
-									);
+									//document.documentElement.innerHTML = await response.text();
+									//let shadow = document.createDocumentFragment();
+									let shadow = document.createElement("html");
+									shadow.innerHTML = await response.text();
+									console.log(shadow);
+									morphdom(document.documentElement, shadow);
+									// executeScriptElements(
+									// 	document.getElementsByTagName("body")[0]
+									// );
 								})
 								.catch((reason) => {
 									console.error(reason);
