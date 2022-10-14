@@ -1,5 +1,11 @@
 # enhance-remix
 
+## 0.0.5
+
+### Patch Changes
+
+- [`f686008`](https://github.com/jacob-ebey/enhance-remix/commit/f686008b69a76ec490c8a76a90665ced2c333bb8) Thanks [@jacob-ebey](https://github.com/jacob-ebey)! - use unpkg for morphdom delivery
+
 ## 0.0.4
 
 ### Patch Changes
