@@ -1,12 +1,3 @@
-import * as fs from "fs";
-import { createRequire } from "module";
-
-const require = createRequire(import.meta.url);
-const morphdom = fs.readFileSync(
-	require.resolve("morphdom/dist/morphdom-umd.min.js"),
-	"utf8"
-);
-
 /**
  * @type {import('@enhance/types').EnhanceElemFn}
  */
@@ -24,9 +15,7 @@ export function RemixForm({ html, state }) {
 			<slot></slot>
 		</form>
 
-		<script>
-			${morphdom};
-		</script>
+		<script src="https://unpkg.com/morphdom@2.6.1/dist/morphdom-umd.min.js"></script>
 
 		<script type="module">
 			function emitChange() {
