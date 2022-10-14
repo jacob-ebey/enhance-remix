@@ -1,5 +1,11 @@
 # enhance-remix
 
+## 0.0.4
+
+### Patch Changes
+
+- [`85c5e0c`](https://github.com/jacob-ebey/enhance-remix/commit/85c5e0c3c9e16d0de9d5d4438015247de75a8c2f) Thanks [@jacob-ebey](https://github.com/jacob-ebey)! - use morphdom for dom diff
+
 ## 0.0.3
 
 ### Patch Changes
