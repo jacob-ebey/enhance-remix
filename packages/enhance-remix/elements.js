@@ -67,7 +67,6 @@ export function RemixForm({ html, state }) {
 
 							window._transitions.forEach((c) => c.controller.abort());
 							window._transitions = [];
-							window._transitionsNeedEmit = true;
 
 							event.preventDefault();
 							return;

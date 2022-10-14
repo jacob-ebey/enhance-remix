@@ -228,15 +228,11 @@ export default function createRequestHandler(routes, elements) {
 							};
 						};
 
-						window.addEventListener("popstate", () => {
-							console.log({
-								_transitionsNeedEmit: window._transitionsNeedEmit,
-							});
-							if (window._transitionsNeedEmit) {
-								let navigation = window._getNavigation();
-								for (let cb of window._navigationCallbacks) {
-									cb(navigation);
-								}
+						// for safari where it hangs pending state on back button
+						window.addEventListener("pageshow", () => {
+							let navigation = window._getNavigation();
+							for (let cb of window._navigationCallbacks) {
+								cb(navigation);
 							}
 						});
 					</script>
