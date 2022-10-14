@@ -1,5 +1,12 @@
 # enhance-remix-node
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [[`85c5e0c`](https://github.com/jacob-ebey/enhance-remix/commit/85c5e0c3c9e16d0de9d5d4438015247de75a8c2f)]:
+  - enhance-remix@0.0.4
+
 ## 0.0.3
 
 ### Patch Changes
