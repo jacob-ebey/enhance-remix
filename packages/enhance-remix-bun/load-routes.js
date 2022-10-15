@@ -3,7 +3,7 @@ import * as path from "path";
 
 import { DefaultRoot } from "enhance-remix";
 
-/** @type {import("./enhance-remix-node").loadRoutes} */
+/** @type {import("./enhance-remix-bun").loadRoutes} */
 export default async function loadRoutes(
 	rootDir = process.cwd(),
 	appDir = "app",
@@ -148,7 +148,6 @@ function createRouteId(appDir, routeFile) {
 	return id;
 }
 
-const routeFileExtensions = [".mjs", ".js"];
 function resolveRouteFile(basePath) {
 	for (let ext of routeFileExtensions) {
 		let file = basePath + ext;
@@ -159,3 +158,5 @@ function resolveRouteFile(basePath) {
 	}
 	return null;
 }
+
+const routeFileExtensions = [".mjs", ".js", ".ts", ".mts"];

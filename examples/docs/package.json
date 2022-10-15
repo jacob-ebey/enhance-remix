@@ -4,12 +4,14 @@
 	"name": "enhance-remix-docs-example",
 	"description": "A basic example of how to use enhance-remix",
 	"scripts": {
+		"start-bun": "bun run ./server-bun.ts",
 		"dev": "nodemon --watch server.js --watch app --watch ../../packages server.js"
 	},
 	"dependencies": {
 		"awsm.css": "3.0.7",
 		"compression": "1.7.4",
 		"enhance-remix": "*",
+		"enhance-remix-bun": "*",
 		"enhance-remix-node": "*",
 		"front-matter": "4.0.2",
 		"highlight.js": "11.6.0",

@@ -4,11 +4,13 @@
 	"version": "0.0.5",
 	"description": "Enhance + Remix",
 	"main": "enhance-remix.js",
+	"types": "enhance-remix.d.ts",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
 		"@enhance/ssr": "3.0.9",
+		"@remix-run/router": "1.0.2",
 		"morphdom": "2.6.1"
 	},
 	"devDependencies": {

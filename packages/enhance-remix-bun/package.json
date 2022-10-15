@@ -1,0 +1,18 @@
+{
+	"type": "module",
+	"name": "enhance-remix-bun",
+	"version": "0.0.5",
+	"description": "Bun utils for enhance-remix",
+	"main": "enhance-remix-bun.js",
+	"types": "enhance-remix-bun.d.ts",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"enhance-remix": "0.0.5"
+	},
+	"devDependencies": {
+		"@enhance/types": "0.4.0",
+		"bun-types": "0.2.0"
+	}
+}

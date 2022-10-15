@@ -4,11 +4,11 @@
 	"version": "0.0.5",
 	"description": "Node utils for enhance-remix",
 	"main": "enhance-remix-node.js",
+	"types": "enhance-remix-node.d.ts",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
-		"@remix-run/router": "1.0.2",
 		"enhance-remix": "0.0.5"
 	},
 	"devDependencies": {

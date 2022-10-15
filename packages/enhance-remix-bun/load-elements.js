@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-/** @type {import("./enhance-remix-node").loadElements} */
+/** @type {import("./enhance-remix-bun").loadElements} */
 export default async function loadElements(
 	rootDir = process.cwd(),
 	appDir = "app",
@@ -39,4 +39,4 @@ function createElementName(elementFile) {
 	return name;
 }
 
-const elementFileExtensions = [".mjs", ".js"];
+const elementFileExtensions = [".mjs", ".js", ".ts", ".mts"];
