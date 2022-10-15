@@ -1,7 +1,7 @@
 {
 	"type": "module",
 	"name": "enhance-remix",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "Enhance + Remix",
 	"main": "enhance-remix.js",
 	"types": "enhance-remix.d.ts",
