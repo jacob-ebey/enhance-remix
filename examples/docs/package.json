@@ -5,7 +5,8 @@
 	"description": "A basic example of how to use enhance-remix",
 	"scripts": {
 		"start-bun": "bun run ./server-bun.ts",
-		"dev": "nodemon --watch server.js --watch app --watch ../../packages server.js"
+		"dev": "nodemon --watch app --watch ../../packages server.js",
+		"dev-bun": "nodemon --watch app --watch ../../packages --exec \"bun run\" server-bun.js"
 	},
 	"dependencies": {
 		"awsm.css": "3.0.7",

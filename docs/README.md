@@ -49,15 +49,29 @@ Update your `package.json` to be a module package:
 
 Add the following script to your `package.json` to reload in dev mode:
 
+For Node.js:
+
 ```json
 {
 	"scripts": {
-		"dev": "nodemon --watch server.js --watch app server.js"
+		"dev": "nodemon --watch app server.js"
+	}
+}
+```
+
+For Bun:
+
+```json
+{
+	"scripts": {
+		"dev": "nodemon --watch app --exec \"bun run\" server.js"
 	}
 }
 ```
 
 Create a `server.js`:
+
+For Node.js:
 
 ```js
 import * as http from "http";
@@ -81,6 +95,29 @@ let port = Number(process.env.PORT || "3000");
 server.listen(port, () => {
 	console.log(`Listening on port http://localhost:${port}`);
 });
+```
+
+For Bun:
+
+```js
+import { createRequestHandler } from "enhance-remix";
+import { loadElements, loadRoutes } from "enhance-remix-bun";
+
+let routes = await loadRoutes();
+let elements = await loadElements();
+
+let handler = createRequestHandler(routes, elements);
+
+let port = Number(process.env.PORT || "3000");
+let server = Bun.serve({
+	fetch: (request) => {
+		// @ts-expect-error
+		request.signal = new AbortController().signal;
+		return handler(request);
+	},
+	port,
+});
+console.log(`Listening on port http://localhost:${port}`);
 ```
 
 Create your first route at `app/routes/index.js`:

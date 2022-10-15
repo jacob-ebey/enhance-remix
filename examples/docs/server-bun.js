@@ -17,4 +17,4 @@ let server = Bun.serve({
 	},
 	port,
 });
-console.log(`Listening on port http://localhost:${port}`);
+console.log(`Listening on port http://localhost:${server.port}`);
