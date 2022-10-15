@@ -1,7 +1,7 @@
 {
 	"type": "module",
 	"name": "enhance-remix-node",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"description": "Node utils for enhance-remix",
 	"main": "enhance-remix-node.js",
 	"types": "enhance-remix-node.d.ts",
@@ -9,7 +9,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
-		"enhance-remix": "0.0.5"
+		"enhance-remix": "0.0.6"
 	},
 	"devDependencies": {
 		"@enhance/types": "0.4.0"
