@@ -6,14 +6,10 @@ import {
 
 import { RemixForm } from "./elements.js";
 
-/**
- *
- * @param {import("@remix-run/router").AgnosticDataRouteObject[]} routes
- * @param {unknown} elements
- * @returns {import("./enhance-remix").RequestHandler}
- */
-export default function createRequestHandler(routes, elements) {
+/** @type {import("./create-request-handler").createRequestHandler} */
+export function createRequestHandler(routes, elements, options) {
 	let rootRoute = false;
+	options = options || {};
 	function recurseRoutesAndAssignId(route) {
 		if (route.element) {
 			route.element._elementName = "route-" + createElementName(route.id);
@@ -107,6 +103,7 @@ export default function createRequestHandler(routes, elements) {
 		}
 
 		let html = enhance({
+			...options,
 			elements: finalElements,
 			initialState: context,
 		});

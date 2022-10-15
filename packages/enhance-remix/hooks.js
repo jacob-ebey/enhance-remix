@@ -1,51 +1,32 @@
-/**
- * @param {import("@enhance/types").EnhanceElemFn} fn
- * @param {{ store: Record<any, any>; }} state
- * @returns {unknown}
- */
+/** @type {import("./hooks").useActionData} */
 export function useActionData(fn, state) {
 	/** @type {import("@remix-run/router").StaticHandlerContext} */
 	let store = state.store;
 	return store.actionData ? store.actionData[fn._routeId] : undefined;
 }
 
-/**
- * @param {import("@enhance/types").EnhanceElemFn} fn
- * @param {{ store: Record<any, any>; }} state
- * @returns {unknown}
- */
+/** @type {import("./hooks").useLoaderData} */
 export function useLoaderData(fn, state) {
 	/** @type {import("@remix-run/router").StaticHandlerContext} */
 	let store = state.store;
 	return store.loaderData[fn._routeId];
 }
 
-/**
- * @param {import("@enhance/types").EnhanceElemFn} fn
- * @param {{ store: Record<any, any>; }} state
- */
+/** @type {import("./hooks").useLocation} */
 export function useLocation(state) {
 	/** @type {import("@remix-run/router").StaticHandlerContext} */
 	let store = state.store;
 	return store.location;
 }
 
-/**
- * @param {import("@enhance/types").EnhanceElemFn} fn
- * @param {{ store: Record<any, any>; }} state
- * @returns {unknown}
- */
+/** @type {import("./hooks").useRouteError} */
 export function useRouteError(fn, state) {
 	/** @type {import("@remix-run/router").StaticHandlerContext} */
 	let store = state.store;
 	return store.errors[fn._routeId];
 }
 
-/**
- *
- * @param {import("@enhance/types").EnhanceElemFn} fn
- * @returns {string}
- */
+/** @type {import("./hooks").useElementName} */
 export function useElementName(fn) {
 	return fn._elementName;
 }

@@ -1,8 +1,8 @@
-export { json, ErrorResponse } from "@remix-run/router";
+export { json, redirect, ErrorResponse } from "@remix-run/router";
 
-export { default as createRequestHandler } from "./create-request-handler.js";
+export { createRequestHandler } from "./create-request-handler.js";
 
-export { default as DefaultRoot } from "./default-root.js";
+export { DefaultRoot } from "./default-root.js";
 
 export {
 	useActionData,
