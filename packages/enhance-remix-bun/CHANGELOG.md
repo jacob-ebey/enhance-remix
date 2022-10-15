@@ -1,5 +1,12 @@
 # enhance-remix-bun
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies [[`86e9a4a`](https://github.com/jacob-ebey/enhance-remix/commit/86e9a4a01111293f5732fd8e778da9d3d8c28bb9)]:
+  - enhance-remix@0.0.7
+
 ## 0.0.6
 
 ### Patch Changes
